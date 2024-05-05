@@ -1,15 +1,18 @@
 local GridText = require("model.GridText")
-local Board = require("model.Board")
 local ClickableBoard = require('model.ClickableBoard')
+local ClickedTiles = require('model.ClickedTiles')
+local Lines = require('model.Lines')
+local CanvasFactory = require('factory.CanvasFactory')
 
-local function generateNewBoard()
-	local text = GridText.getRandomTextArray()
-	return Board:new(text)
-end
-
-local board = generateNewBoard()
-local clickableBoard = ClickableBoard:new(board)
+local tile = {getWidth = function() return 100  end, getHeight = function() return 100 end}
+local startY = 100
+local height = 600
+local width = 500
+local text = GridText.getRandomTextArray()
+local clickableBoard = ClickableBoard:new(tile,100,500)
 local clickedTiles = ClickedTiles:new()
+local lines = Lines:new(board)
+local textCanvas = CanvasFactory.createTextCanvas(text,tile,startY,height,width)
 
 function love.draw()
 

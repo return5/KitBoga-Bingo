@@ -1,4 +1,4 @@
-local coord = require("model.coord")
+local Coord = require("model.coord")
 
 local setmetatable = setmetatable
 local floor = math.floor
@@ -13,10 +13,24 @@ local function isClicked(x,y)
 	return true
 end
 
+function ClickableBoard:xToCoord(x)
+	if x == 0 then return 0 end
+	return (x - 1) * self.tileWidth
+end
+
+function ClickableBoard:yToCoord(y)
+	if y == 0 then return self.height end
+	return ((y - 1) * self.tileHeight) + self.height
+end
+
+function ClickableBoard:indexToCoord(x,y)
+	return Coord:new(self:xToCoord(x),self:yToCoord(y))
+end
+
 function ClickableBoard:clicked(x,y)
 	local i = floor(x) % floor (self.width * 5)
 	local j = floor(y) % floor(self.height * 5)
-	return coord:new(i,j)
+	return Coord:new(i,j)
 end
 
 function ClickableBoard:new(tile,height,width)

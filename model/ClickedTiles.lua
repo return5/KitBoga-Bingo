@@ -1,4 +1,5 @@
 local Board = require('model.Board')
+
 local setmetatable = setmetatable
 
 local ClickedTiles = {}
@@ -19,8 +20,8 @@ local function checkColumn(y,x,board)
 	return board[y][x]
 end
 
-function ClickedTiles:checkVertical(x)
-	return self:checkForLine(x,checkColumn)
+function ClickedTiles:checkVertical(coord)
+	return self:checkForLine(coord.x,checkColumn)
 end
 
 
@@ -28,16 +29,16 @@ local function checkRow(x,y,board)
 	return board[y][x]
 end
 
-function ClickedTiles:checkHorizontal(y)
-	return self:checkForLine(y,checkRow)
+function ClickedTiles:checkHorizontal(coord)
+	return self:checkForLine(coord.y,checkRow)
 end
 
-function ClickedTiles:checkForRows(x,y,lines,board)
-	if self:checkVertical(x) then
-		lines:addVertical(x,board)
+function ClickedTiles:checkForRows(coord,lines)
+	if self:checkVertical(coord.x) then
+		lines:addVertical(coord)
 	end
-	if self:checkHorizontal(y) then
-		lines:addHorizontal(y,board)
+	if self:checkHorizontal(coord.y) then
+		lines:addHorizontal(coord)
 	end
 end
 
@@ -56,6 +57,12 @@ function ClickedTiles:clicked(coord)
 		return self:add(coord)
 	end
 	return self:remove(coord)
+end
+
+function ClickedTiles:isClicked(y)
+	if y <= self.height then return false end
+	return true
+
 end
 
 function ClickedTiles:reset()

@@ -1,10 +1,6 @@
-local TextBoard = require('model.TextBoard')
 local setCanvas = love.graphics.setCanvas
 local newCanvas = love.graphics.newCanvas
-local draw = loves.graphics.draw
-local setLineWidth = love.graphics.setLineWidth
-local line  = love.graphics.line
-local setColor = love.graphics.setColor
+local line = love.graphics.line
 
 
 local CanvasFactory = {}
@@ -12,15 +8,25 @@ CanvasFactory.__index = CanvasFactory
 
 _ENV = CanvasFactory
 
-
-
-function CanvasFactory.createTextCanvas(text,tile,startY,height,width)
-	local textBoard = TextBoard:new(text,tile)
+function CanvasFactory.createLinesCanvas(tiles,startY,height,width,lineWidth)
 	local canvas = newCanvas(height - startY,width)
 	setCanvas(canvas)
-	for _, textCoord in textBoard:iterate() do
-		textCoord:print()
+	for i=1,4,1 do
+		local x = tiles:getX(i) - lineWidth
+		line(x,startY,x,height)
 	end
+	for i=1,11,5 do
+		local y = tiles:getY(i) - lineWidth
+		line(1,y,width,y)
+	end
+	setCanvas()
+	return canvas
+end
+
+function CanvasFactory.createTextCanvas(tiles,startY,height,width)
+	local canvas = newCanvas(height - startY,width)
+	setCanvas(canvas)
+	tiles:print()
 	setCanvas()
 	return canvas
 end

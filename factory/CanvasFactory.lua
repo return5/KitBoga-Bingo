@@ -1,6 +1,8 @@
 local setCanvas = love.graphics.setCanvas
 local newCanvas = love.graphics.newCanvas
 local line = love.graphics.line
+local newFont = love.graphics.newFont
+local TitleTile = require('model.TitleTile')
 
 
 local CanvasFactory = {}
@@ -27,6 +29,16 @@ function CanvasFactory.createTextCanvas(tiles,startY)
 	local canvas = newCanvas(tiles.tiles[#tiles.tiles].y_height - startY,tiles.tiles[#tiles.tiles].x_width)
 	setCanvas(canvas)
 	tiles:print()
+	setCanvas()
+	return canvas
+end
+
+function CanvasFactory.createTitle(titleText,startY,startX,height,width)
+	local canvas = newCanvas(height,width)
+	local font = newFont(25)
+	local titleTile = TitleTile:new(titleText,height,width,startX,startY,width,0,0,font)
+	setCanvas(canvas)
+	titleTile:print()
 	setCanvas()
 	return canvas
 end

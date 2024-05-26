@@ -8,13 +8,16 @@ local width = 500
 local lineWidth = 1
 local textArr = GridText.getRandomTextArray()
 local tiles = TilesFactory.generateTiles(100,100,textArr,lineWidth + 1,startY + lineWidth,lineWidth)
-local tileCanvas = CanvasFactory.createTextCanvas(tiles,startY,height,width)
-local lineCanvas = CanvasFactory.createLinesCanvas(tiles,startY,height,width,lineWidth)
-math.randomseed(os.time())
+local canvases = {
+	CanvasFactory.createTextCanvas(tiles,startY,height,width),
+	CanvasFactory.createLinesCanvas(tiles,startY,height,width,lineWidth),
+	CanvasFactory.createTitle("KitBoga Bingo",1,1,startY + 100,width)
+}
 
 function love.draw()
-	love.graphics.draw(tileCanvas)
-	love.graphics.draw(lineCanvas)
+	for i=1,#canvases,1 do
+		love.graphics.draw(canvases[i])
+	end
 end
 
 

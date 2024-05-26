@@ -12,7 +12,7 @@ local function generateCanvases()
 	local width = tiles.tiles[#tiles.tiles].x_width + lineWidth
 	love.window.setMode(width,height)
 	return {
-		CanvasFactory.createTextCanvas(tiles,startY),
+		CanvasFactory.createTextCanvas(tiles),
 		CanvasFactory.createLinesCanvas(tiles,startY,lineWidth),
 		CanvasFactory.createTitle("Kit Boga Bingo",1,1,startY + lineWidth,width)
 	}

@@ -29,8 +29,8 @@ function CanvasFactory.createLinesCanvas(tiles,startY,lineWidth)
 	return canvas
 end
 
-function CanvasFactory.createTextCanvas(tiles,startY)
-	local canvas = newCanvas(tiles.tiles[#tiles.tiles].x_width,tiles.tiles[#tiles.tiles].y_height - startY)
+function CanvasFactory.createTextCanvas(tiles)
+	local canvas = newCanvas(tiles.tiles[#tiles.tiles].x_width,tiles.tiles[#tiles.tiles].y_height)
 	setCanvas(canvas)
 	tiles:print()
 	setCanvas()

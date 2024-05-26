@@ -7,11 +7,11 @@ Tiles.__index = Tiles
 _ENV = Tiles
 
 function Tiles:getX(i)
-	return self.tiles[i].x_width
+	return self.tiles[i].x
 end
 
 function Tiles:getY(i)
-	return self.tiles[i].y_height
+	return self.tiles[i].y
 end
 
 function Tiles:addNewTile(x,y,text)

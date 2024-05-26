@@ -10,7 +10,6 @@ setmetatable(TitleTile,Tile)
 
 _ENV = TitleTile
 
-
 function TitleTile:print()
 	setFont(self.font)
 	Tile.print(self)

@@ -11,7 +11,7 @@ local tiles = TilesFactory.generateTiles(100,100,textArr,lineWidth + 1,startY + 
 local canvases = {
 	CanvasFactory.createTextCanvas(tiles,startY,height,width),
 	CanvasFactory.createLinesCanvas(tiles,startY,height,width,lineWidth),
-	CanvasFactory.createTitle("KitBoga Bingo",1,1,startY + 100,width)
+	CanvasFactory.createTitle("Kit Boga Bingo",1,1,startY + lineWidth,width)
 }
 
 function love.draw()

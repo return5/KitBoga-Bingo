@@ -1,7 +1,7 @@
 local Tile = require('model.Tile')
 local setFont = love.graphics.setFont
 local defaultFont = love.graphics.getFont()
-local printf = love.graphics.printf
+local ceil = math.ceil
 local setmetatable = setmetatable
 
 local TitleTile = {}
@@ -19,9 +19,11 @@ end
 
 function TitleTile:new(text,height,width,x,y,textLimit,textWidthPadding,textHeightPadding,font)
 	setFont(font)
-	local tile = setmetatable(Tile:new(text,height,width,x,y,textLimit,textWidthPadding,textHeightPadding),self)
+	local textStartY = ceil((height - font:getHeight(text)) / 2) + y
+	local textStartX = ceil((width - font:getWidth(text)) / 2) + x
+	local tile = setmetatable(Tile:new(text,height,width,textStartX,textStartY,textLimit,textWidthPadding,textHeightPadding),self)
+	tile.text = text
 	tile.font = font
-	tile.limit = font:getWidth(tile.text)
 	setFont(defaultFont)
 	return tile
 end

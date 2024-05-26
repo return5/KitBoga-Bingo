@@ -4,14 +4,13 @@ local line = love.graphics.line
 local newFont = love.graphics.newFont
 local TitleTile = require('model.TitleTile')
 
-
 local CanvasFactory = {}
 CanvasFactory.__index = CanvasFactory
 
 _ENV = CanvasFactory
 
 function CanvasFactory.createLinesCanvas(tiles,startY,height,width,lineWidth)
-	local canvas = newCanvas(height - startY,width)
+	local canvas = newCanvas(width,height - startY)
 	setCanvas(canvas)
 	for i=1,4,1 do
 		local x = tiles:getX(i) - lineWidth
@@ -26,7 +25,7 @@ function CanvasFactory.createLinesCanvas(tiles,startY,height,width,lineWidth)
 end
 
 function CanvasFactory.createTextCanvas(tiles,startY)
-	local canvas = newCanvas(tiles.tiles[#tiles.tiles].y_height - startY,tiles.tiles[#tiles.tiles].x_width)
+	local canvas = newCanvas(tiles.tiles[#tiles.tiles].x_width,tiles.tiles[#tiles.tiles].y_height - startY)
 	setCanvas(canvas)
 	tiles:print()
 	setCanvas()
@@ -34,8 +33,8 @@ function CanvasFactory.createTextCanvas(tiles,startY)
 end
 
 function CanvasFactory.createTitle(titleText,startY,startX,height,width)
-	local canvas = newCanvas(height,width)
-	local font = newFont(25)
+	local canvas = newCanvas(width,height)
+	local font = newFont(35)
 	local titleTile = TitleTile:new(titleText,height,width,startX,startY,width,0,0,font)
 	setCanvas(canvas)
 	titleTile:print()

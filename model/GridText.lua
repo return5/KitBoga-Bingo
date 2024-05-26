@@ -1,4 +1,4 @@
-local rand = math.random
+local rand = love.math.random
 
 local GridText = {}
 GridText.__index = GridText
@@ -18,7 +18,7 @@ local text = {
 }
 
 local function randomizeText()
-	for i=#text,1,-1 do
+	for i=#text,2,-1 do
 		local randI = rand(1,i)
 		local temp = text[randI]
 		text[randI] = text[i]

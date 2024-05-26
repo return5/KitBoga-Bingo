@@ -42,7 +42,7 @@ local function setCurrentLen(char,currentLen,limit,padding,index,lastSpace,textA
 end
 
 local function wrapText(text,limit,padding)
-	local lastSpace = 1
+	local lastSpace = 0
 	local currentLen = 0
 	local index = 1
 	local textArr = {}

@@ -2,8 +2,13 @@ local GridText = require("model.GridText")
 local TilesFactory = require('factory.TilesFactory')
 local CanvasFactory = require('factory.CanvasFactory')
 local ClickableFactory = require('factory.ClickableFactory')
+local defaultFont = love.graphics.getFont()
+local bingoFont = love.graphics.newFont(40)
+local gotBingo = false
+local bingoTextHeightMiddle = math.floor(bingoFont:getHeight("a") / 2)
 
 local function initBoard()
+	love.graphics.setFont(defaultFont)
 	local startY = 100
 	local lineWidth = 1
 	local tiles = TilesFactory.generateTiles(100,100,GridText.getRandomTextArray(),lineWidth + 1,startY + lineWidth,lineWidth)
@@ -17,14 +22,20 @@ local function initBoard()
 		CanvasFactory.createLinesCanvas(tiles, startY, lineWidth),
 		CanvasFactory.createTitle("Kit Boga Bingo", 1, 1, startY + lineWidth, width)
 	}
-	return clickable,canvases
+	gotBingo = false
+	local middleX = tiles.tiles[3][3].x + math.floor(tiles.tiles[3][3].width / 2)
+	local middleY = tiles.tiles[3][3].y  + math.floor(tiles.tiles[3][3].height / 2)
+	return clickable,canvases,middleX,middleY
 end
 
-local clickable,canvases = initBoard()
-local gotBingo = false
+local clickable,canvases,middleX,middleY = initBoard()
 
 local function bingo()
-
+	local text = "You Got Bingo!"
+	love.graphics.setFont(bingoFont)
+	local middleText = math.floor(bingoFont:getWidth(text) / 2)
+	love.graphics.print(text,middleX - middleText,middleY - bingoTextHeightMiddle)
+	love.graphics.setFont(defaultFont)
 end
 
 function love.draw()
@@ -43,7 +54,7 @@ end
 
 function love.keypressed(key)
 	if key == "r" then
-		clickable,canvases = initBoard()
+		clickable,canvases,middleX,middleY = initBoard()
 	end
 end
 

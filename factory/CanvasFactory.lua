@@ -10,22 +10,23 @@ CanvasFactory.__index = CanvasFactory
 _ENV = CanvasFactory
 
 local function generateNewCanvas(tiles,addedLength)
-	return newCanvas(tiles.tiles[#tiles.tiles].x_width + addedLength,tiles.tiles[#tiles.tiles].y_height + addedLength)
+	local finalTile = tiles:getLastTile()
+	return newCanvas(finalTile.x_width + addedLength,finalTile.y_height + addedLength)
 end
 
 function CanvasFactory.createLinesCanvas(tiles,startY,lineWidth)
-	local finalTile = tiles.tiles[#tiles.tiles]
+	local finalTile = tiles:getLastTile()
 	local canvas = generateNewCanvas(tiles,lineWidth)
 	local height  = canvas:getHeight() - lineWidth
 	local width = canvas:getWidth() - lineWidth
 	setCanvas(canvas)
 	line(finalTile.x_width - lineWidth,startY,finalTile.x_width - lineWidth,height)
 	for i=1,5,1 do
-		local x = tiles:getX(i) - lineWidth
+		local x = tiles:getX(1,i) - lineWidth
 		line(x,startY,x,height)
 	end
-	for i=1,25,5 do
-		local y = tiles:getY(i) - lineWidth
+	for i=1,5,1 do
+		local y = tiles:getY(i,1) - lineWidth
 		line(1,y,width,y)
 	end
 	line(1,finalTile.y_height - lineWidth,width,finalTile.y_height - lineWidth)

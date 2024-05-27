@@ -12,15 +12,37 @@ Clickable.__index = Clickable
 
 _ENV = Clickable
 
+function Clickable:checkTopToBottom(i,j)
+
+end
+
+function Clickable:checkSideToSide(i,j)
+
+end
+
+function Clickable:checkCross(i,j)
+
+end
+
+function Clickable:checkForBingo(i,j)
+	self:checkTopToBottom(i,j)
+	self:checkRows(i,j)
+end
+
 function Clickable:clicked(x,y)
 	local clickedTile = self.textTiles:clicked(x,y)
 	if clickedTile then
-		if self.clickedTiles[clickedTile] then
-			self.clickedTiles[clickedTile] = nil
+		local i = clickedTile.i
+		local j = clickedTile.j
+		if self.clickedTiles[clickedTile.i] and self.clickedTiles[i][j] then
+			self.clickedTiles[clickedTile.i][clickedTile.j] = nil
 		else
-			self.clickedTiles[clickedTile] = XMark:new(self.textTiles:getTile(clickedTile))
+			if not self.clickedTiles[i] then self.clickedTiles[i] = {} end
+			self.clickedTiles[i][j] = XMark:new(self.textTiles:getTile(clickedTile))
+			return self:checkForBingo(i,j)
 		end
 	end
+	return false
 end
 
 function Clickable:print()

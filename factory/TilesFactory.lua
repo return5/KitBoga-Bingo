@@ -14,22 +14,23 @@ local function returnGetNextText(text)
 	end
 end
 
-local function generateRow(tiles,nextText,lineWidth,y)
-	for i=1,4,1 do
-		local x = tiles.tiles[#tiles.tiles].x_width + lineWidth
-		tiles:addNewTile(x,y,nextText())
+local function generateRow(tiles,nextText,lineWidth,y,i)
+	local row = tiles.tiles[i]
+	for j=2,5,1 do
+		local x = row[#row].x_width + lineWidth
+		tiles:addNewTile(i,j,x,y,nextText())
 	end
 end
 
-local function generateColumnStartTile(tiles,x,y,nextText)
-	tiles:addNewTile(x,y,nextText())
+local function generateColumnStartTile(tiles,x,y,nextText,i,j)
+	tiles:addNewTile(i,j,x,y,nextText())
 end
 
 local function generateColumns(tiles,nextText,lineWidth,startX)
-	for i=1,4,1 do
-		local y = tiles.tiles[#tiles.tiles].y_height + lineWidth
-		generateColumnStartTile(tiles,startX,y,nextText)
-		generateRow(tiles,nextText,lineWidth,y)
+	for i=2,5,1 do
+		local y = tiles:getLastTile().y_height + lineWidth
+		generateColumnStartTile(tiles,startX,y,nextText,i,1)
+		generateRow(tiles,nextText,lineWidth,y,i)
 	end
 end
 
@@ -39,8 +40,8 @@ function TilesFactory.generateTiles(tileHeight,tileWidth,textArr,startX,startY,l
 	local textWidthPadding = floor(tileWidth / 4)
 	local textHeightPadding = floor(tileHeight / 4)
 	local tiles = Tiles:new(tileHeight,tileWidth,textLimit,textWidthPadding,textHeightPadding)
-	generateColumnStartTile(tiles,startX,startY,nextText)
-	generateRow(tiles,nextText,lineWidth,startY)
+	generateColumnStartTile(tiles,startX,startY,nextText,1,1)
+	generateRow(tiles,nextText,lineWidth,startY,1)
 	generateColumns(tiles,nextText,lineWidth,startX)
 	return tiles
 end

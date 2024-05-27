@@ -7,8 +7,9 @@ local function initBoard()
 	local startY = 100
 	local lineWidth = 1
 	local tiles = TilesFactory.generateTiles(100,100,GridText.getRandomTextArray(),lineWidth + 1,startY + lineWidth,lineWidth)
-	local height = tiles.tiles[#tiles.tiles].y_height + lineWidth
-	local width = tiles.tiles[#tiles.tiles].x_width + lineWidth
+	local bottomTile = tiles:getLastTile()
+	local height = bottomTile.y_height + lineWidth
+	local width = bottomTile.x_width + lineWidth
 	love.window.setMode(width,height)
 	local clickable = ClickableFactory.createClickable(tiles)
 	local canvases = {

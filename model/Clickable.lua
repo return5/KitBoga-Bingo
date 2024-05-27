@@ -12,21 +12,49 @@ Clickable.__index = Clickable
 
 _ENV = Clickable
 
-function Clickable:checkTopToBottom(i,j)
-
+function Clickable:checkTopToBottom(j)
+	for y = 1,5,1 do
+		if not self.clickedTiles[y] or not self.clickedTiles[y][j] then return false end
+	end
+	return true
 end
 
-function Clickable:checkSideToSide(i,j)
-
+function Clickable:checkSideToSide(i)
+	for x = 1,5,1 do
+		if self.clickedTiles[i] or not self.clickedTiles[i][x] then return false end
+	end
+	return true
 end
+
+
+function Clickable:checkDiagonal(startJ,incrJ)
+	local j = startJ
+	for i=1,5,1 do
+		if not self.clickedTiles[i] or not self.clickedTiles[i][j] then return false end
+		j = j + incrJ
+	end
+	return true
+end
+
+local mapIToJ = {{},{},{},{},{}}
+mapIToJ[1][5] = true
+mapIToJ[2][4] = true
+mapIToJ[3][3] = true
+mapIToJ[4][2] = true
+mapIToJ[5][1] = true
 
 function Clickable:checkCross(i,j)
-
+	if i ~= j or not mapIToJ[i] or not mapIToJ[i][j] then
+		return false
+	end
+	return self:checkDiagonal(1,1) or
+		self:checkDiagonal(5,-1)
 end
 
 function Clickable:checkForBingo(i,j)
-	self:checkTopToBottom(i,j)
-	self:checkSideToSide(i,j)
+	return self:checkTopToBottom(j) or
+		self:checkSideToSide(i) or
+	self:checkCross(i,j)
 end
 
 function Clickable:clicked(x,y)

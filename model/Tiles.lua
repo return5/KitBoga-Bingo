@@ -16,7 +16,7 @@ end
 
 function Tiles:addNewTile(i,j,x,y,text)
 	if not self.tiles[i] then self.tiles[i] = {} end
-	self.tiles[i][j] = Tile:new(text,self.height,self.width,x,y,self.limit,self.paddingX,self.paddingY)
+	self.tiles[i][j] = Tile:new(text,self.height,self.width,x,y,self.limit,self.paddingX,self.paddingY,i,j)
 end
 
 function Tiles:print()

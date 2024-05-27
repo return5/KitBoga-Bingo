@@ -55,10 +55,10 @@ local function wrapText(text,limit,padding)
 	return concat(textArr)
 end
 
-function Tile:new(text,height,width,x,y,textLimit,textWidthPadding,textHeightPadding)
+function Tile:new(text,height,width,x,y,textLimit,textWidthPadding,textHeightPadding,i,j)
 	return setmetatable({
 		text = wrapText(text,textLimit,textWidthPadding),limit = textLimit + 100,height = height,width = width,x = x, y = y,x_width = x + width, y_height = y + height,
-		textX = x + textWidthPadding,textY = y + textHeightPadding
+		textX = x + textWidthPadding,textY = y + textHeightPadding,i = i, j = j
 	},self)
 end
 

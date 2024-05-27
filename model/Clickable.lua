@@ -26,7 +26,7 @@ end
 
 function Clickable:checkForBingo(i,j)
 	self:checkTopToBottom(i,j)
-	self:checkRows(i,j)
+	self:checkSideToSide(i,j)
 end
 
 function Clickable:clicked(x,y)
@@ -34,11 +34,11 @@ function Clickable:clicked(x,y)
 	if clickedTile then
 		local i = clickedTile.i
 		local j = clickedTile.j
-		if self.clickedTiles[clickedTile.i] and self.clickedTiles[i][j] then
-			self.clickedTiles[clickedTile.i][clickedTile.j] = nil
+		if self.clickedTiles[i] and self.clickedTiles[i][j] then
+			self.clickedTiles[i][j] = nil
 		else
 			if not self.clickedTiles[i] then self.clickedTiles[i] = {} end
-			self.clickedTiles[i][j] = XMark:new(self.textTiles:getTile(clickedTile))
+			self.clickedTiles[i][j] = XMark:new(clickedTile)
 			return self:checkForBingo(i,j)
 		end
 	end
@@ -48,8 +48,10 @@ end
 function Clickable:print()
 	setColor(1,0,0)
 	setLineWidth(defaultLineWidth + 3)
-	for _,v in pairs(self.clickedTiles) do
-		v:print()
+	for _,rows in pairs(self.clickedTiles) do
+		for _,tile in pairs(rows) do
+			tile:print()
+		end
 	end
 	setColor(defaultR,defaultG,defaultB)
 	setLineWidth(defaultLineWidth)

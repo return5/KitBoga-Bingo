@@ -9,11 +9,15 @@ CanvasFactory.__index = CanvasFactory
 
 _ENV = CanvasFactory
 
+local function generateNewCanvas(tiles,addedLength)
+	return newCanvas(tiles.tiles[#tiles.tiles].x_width + addedLength,tiles.tiles[#tiles.tiles].y_height + addedLength)
+end
+
 function CanvasFactory.createLinesCanvas(tiles,startY,lineWidth)
 	local finalTile = tiles.tiles[#tiles.tiles]
-	local height =  finalTile.y_height
-	local width = finalTile.x_width
-	local canvas = newCanvas(width + lineWidth, finalTile.y_height + lineWidth)
+	local canvas = generateNewCanvas(tiles,lineWidth)
+	local height  = canvas:getHeight() - lineWidth
+	local width = canvas:getWidth() - lineWidth
 	setCanvas(canvas)
 	line(finalTile.x_width - lineWidth,startY,finalTile.x_width - lineWidth,height)
 	for i=1,5,1 do
@@ -30,7 +34,7 @@ function CanvasFactory.createLinesCanvas(tiles,startY,lineWidth)
 end
 
 function CanvasFactory.createTextCanvas(tiles)
-	local canvas = newCanvas(tiles.tiles[#tiles.tiles].x_width,tiles.tiles[#tiles.tiles].y_height)
+	local canvas = generateNewCanvas(tiles,0)
 	setCanvas(canvas)
 	tiles:print()
 	setCanvas()
@@ -46,6 +50,5 @@ function CanvasFactory.createTitle(titleText,startY,startX,height,width)
 	setCanvas()
 	return canvas
 end
-
 
 return CanvasFactory

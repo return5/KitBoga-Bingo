@@ -24,6 +24,17 @@ function Tiles:print()
 	end
 end
 
+function Tiles:getTile(index)
+	return self.tiles[index]
+end
+
+function Tiles:clicked(x,y)
+	for i=1,#self.tiles,1 do
+		if self.tiles[i]:clicked(x,y) then return i end
+	end
+	return false
+end
+
 function Tiles:new(tileHeight,tileWidth,textLimit,paddingX,paddingY)
 	return setmetatable({height = tileHeight,width = tileWidth,tiles = {},limit = textLimit,paddingX = paddingX,paddingY = paddingY},self)
 end

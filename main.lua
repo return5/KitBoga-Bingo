@@ -20,7 +20,7 @@ local function initBoard()
 	local canvases = {
 		CanvasFactory.createTextCanvas(tiles),
 		CanvasFactory.createLinesCanvas(tiles, startY, lineWidth),
-		CanvasFactory.createTitle("Kit Boga Bingo", 1, 1, startY + lineWidth, width)
+		CanvasFactory.createTitle("KitBoga Bingo", 1, 1, startY + lineWidth, width)
 	}
 	gotBingo = false
 	local middleX = tiles.tiles[3][3].x + math.floor(tiles.tiles[3][3].width / 2)

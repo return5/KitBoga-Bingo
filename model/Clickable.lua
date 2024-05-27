@@ -20,12 +20,12 @@ function Clickable:checkTopToBottom(j)
 end
 
 function Clickable:checkSideToSide(i)
+	if not self.clickedTiles[i] then return false end
 	for x = 1,5,1 do
-		if self.clickedTiles[i] or not self.clickedTiles[i][x] then return false end
+		if not self.clickedTiles[i][x] then return false end
 	end
 	return true
 end
-
 
 function Clickable:checkDiagonal(startJ,incrJ)
 	local j = startJ
@@ -44,7 +44,7 @@ mapIToJ[4][2] = true
 mapIToJ[5][1] = true
 
 function Clickable:checkCross(i,j)
-	if i ~= j or not mapIToJ[i] or not mapIToJ[i][j] then
+	if i ~= j and not (mapIToJ[i] and mapIToJ[i][j]) then
 		return false
 	end
 	return self:checkDiagonal(1,1) or

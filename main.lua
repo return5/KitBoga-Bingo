@@ -21,18 +21,24 @@ local function initBoard()
 end
 
 local clickable,canvases = initBoard()
+local gotBingo = false
+
+local function bingo()
+
+end
 
 function love.draw()
 	for i=1,#canvases,1 do
 		love.graphics.draw(canvases[i])
 	end
 	clickable:print()
+	if gotBingo then
+		bingo()
+	end
 end
 
 function love.mousepressed(x,y,button)
-	if button == 1 then
-		clickable:clicked(x,y)
-	end
+	gotBingo = button == 1 and clickable:clicked(x,y)
 end
 
 function love.keypressed(key)
